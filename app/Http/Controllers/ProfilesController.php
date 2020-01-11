@@ -32,6 +32,7 @@ class ProfilesController extends Controller
             'image' => 'required',
         ]);
 
-        dd($data);
+        $user->profile->update($data);
+        return redirect('/profile/{{$user->id}}');
     }
 }
