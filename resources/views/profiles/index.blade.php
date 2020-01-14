@@ -4,18 +4,29 @@
 <div class="container">
    <div class="row">
        <div class="col-3 p-5">
-       <img src="https://instagram.fkhi6-1.fna.fbcdn.net/v/t51.2885-19/s150x150/70985486_577637296311063_2240788552625422336_n.jpg?_nc_ht=instagram.fkhi6-1.fna.fbcdn.net&_nc_ohc=Tj6v7qiBykUAX8Ieexl&oh=d5452ace6eeaaefb7e36c023f5f95df8&oe=5EAA2DD7" class="rounded-circle">
+       <img src="{{$user->profile->profileImage()}}" class="rounded-circle w-100">
        </div>
        <div class="col-9 p-5">
        <div class="d-flex justify-content-between align-items-baseline">
-       <h1>{{$user->username}}</h1>
-       <a href="/p/create">Add New Post</a>
+       
+       <div class="d-flex align-item-center pb-3">
+            <div class='h4'>{{$user->username}}</div>
+
+            <follow-button user-id="{{$user->id}}" follows="{{$follows}}"></follow-button>
+
        </div>
-       <a href="/profile/{{$user->id}}/edit">Edit Profile</a>
+
+       @can('update', $user->profile)
+       <a href="/p/create">Add New Post</a>
+       @endcan
+       </div>
+       @can('update', $user->profile)
+            <a href="/profile/{{$user->id}}/edit">Edit Profile</a>
+       @endcan
         <div class="d-flex">
         <div class="pr-5"><strong>{{$user->posts->count()}}</strong> posts</div>
-        <div class="pr-5"><strong>23K</strong> followers</div>
-        <div class="pr-5"><strong>212</strong> following</div>
+        <div class="pr-5"><strong>{{$user->profile->followers->count()}}</strong> followers</div>
+        <div class="pr-5"><strong>{{$user->following->count()}}</strong> following</div>
         </div>
 
         <div class="pt-4 font-weight-bold">{{$user->profile->title}}</div>
